@@ -17,6 +17,7 @@ class Cinematica(object):
     el cálculo numérico de la transformación Denavit-Har-
     tenberg
 
+    Cinematica([['theta1','d1','a1','alpha1'],['theta2','d2','a2','alpha2'],[...]])
     """
     def __init__(self,lista):
         self.juntas=len(lista)
