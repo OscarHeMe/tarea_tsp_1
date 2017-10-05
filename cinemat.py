@@ -23,7 +23,7 @@ class Cinematica(object):
         self.juntas=len(lista)
         x=[]
         z=[]
-        r=[]
+        r=[Matrix([0,0,0])]
         mat=Matrix([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]])
         orig=Matrix(lista)
         for i in range(0,len(lista)):#len(lista)
@@ -50,10 +50,6 @@ class Cinematica(object):
         return trans
         '''
 
-    def compute_dh(self):
-        trans=np.matrix([[np.cos(self.theta), -np.cos(self.alpha)*np.sin(self.theta), np.sin(self.alpha)*np.sin(self.theta), self.dist_x*np.cos(self.theta)],[np.sin(self.theta),np.cos(self.alpha)*np.cos(self.theta),-np.sin(self.alpha)*np.cos(self.theta),self.dist_x*np.sin(self.theta)],[0,np.sin(self.alpha),np.cos(self.alpha),self.dist_z],[0,0,0,1]])
-        return trans
-
     def compute_jacobian(self, lista):
         '''self.compute_jacobian(list)
         list---> a list with r for rotational joint or t for translational joint
@@ -66,7 +62,7 @@ class Cinematica(object):
         M=zeros(6,self.juntas)
         for i in range(0,len(lista)):
             if lista[i]=='r' or lista[i]=='R':
-                pc=z[i].cross(r[self.juntas-1]-r[i])
+                pc=z[i].cross(r[self.juntas]-r[i])
                 M[:,i]=z[i].row_insert(0,pc)
             elif lista[i]=='t' or lista[i]=='t':
                 M[:,i]=cero.row_insert(0,z[i])
